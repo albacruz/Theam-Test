@@ -1,0 +1,46 @@
+{
+  "name": "theamtest",
+  "version": "0.0.1",
+  "description": "Second phase of The AGile Monkeys recruiment process",
+  "devDependencies": {
+    "ts-node": "3.3.0",
+    "@types/node": "^8.0.29",
+    "typescript": "3.3.3333",
+    "nodemon": "^2.0.4",
+    "supertest": "^5.0.0"
+  },
+  "dependencies": {
+    "@types/jest": "^26.0.14",
+    "express": "^4.17.1",
+    "jest": "^26.4.2",
+    "morgan": "^1.10.0",
+    "pg": "^8.3.3",
+    "reflect-metadata": "^0.1.10",
+    "ts-jest": "^26.4.1",
+    "typeorm": "0.2.28"
+  },
+  "scripts": {
+    "start": "ts-node src/index.ts",
+    "start:watch": "nodemon src/index.ts",
+    "test": "jest",
+    "test:watch": "jest --watchAll"
+  },
+  "jest": {
+    "moduleFileExtensions": [
+      "ts",
+      "tsx",
+      "js"
+    ],
+    "transform": {
+      "^.+\\.(ts|tsx)$": "ts-jest"
+    },
+    "globals": {
+      "ts-jest": {
+        "tsConfigFile": "tsconfig.json"
+      }
+    },
+    "testMatch": [
+      "**/__tests__/*.+(ts|tsx|js)"
+    ]
+  }
+}
