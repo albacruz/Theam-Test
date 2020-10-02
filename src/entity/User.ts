@@ -6,13 +6,13 @@ export class User {
   id: number;
 
   @Column()
-  firstName: string;
+  name: string;
 
   @Column()
-  lastName: string;
+  surname: string;
 
   @Column()
-  age: number;
+  photo: string;
 }
 
 /*console.log("Inserting a new user into the database...");

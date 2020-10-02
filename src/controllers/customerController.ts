@@ -1,11 +1,16 @@
-/* async function getAllCustomers(req, res) {
-  const customers = await Customer.find();
-  console.log(customers);
-  res.json();
-} */
+import { Customer } from "../entity/Customer";
+import { getConnection } from "typeorm";
+
+export async function getAllCustomers(req, res) {
+  const customers = await getConnection().manager.find(Customer);
+  res.json(customers);
+}
 
 export async function createCustomer(req, res) {
-  /* const newCustomer = //new Customer(req.body);
-  newCustomer.save(); */
-  res.json(req.body);
+  const newCustomer = new Customer();
+  newCustomer.name = req.body.name;
+  newCustomer.surname = req.body.surname;
+  newCustomer.photo = req.body.photo;
+  await getConnection().manager.save(newCustomer);
+  res.send(newCustomer);
 }
