@@ -1,6 +1,11 @@
 import * as request from "supertest";
-import { app } from "../index";
+import { app } from "../server";
+import { customer1 } from "./fixtures/customers";
+import { connection } from "../server";
 
+beforeAll(async () => {
+  await connection;
+});
 /**
  * Testing get all customers endpoint
  */
@@ -23,6 +28,7 @@ describe("POST /customers", () => {
   it("respond with json structure containing created customer information", async (done) => {
     const response = await request(app)
       .post("/customers")
+      .send(customer1)
       .expect("Content-Type", /json/)
       .expect(200);
     console.log(response.body);

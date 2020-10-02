@@ -40,7 +40,7 @@
       }
     },
     "testMatch": [
-      "**/__tests__/*.+(ts|tsx|js)"
+      "**/test/*.+(ts|tsx|js)"
     ]
   }
 }
