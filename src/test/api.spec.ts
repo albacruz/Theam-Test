@@ -35,3 +35,12 @@ describe("POST /customers", () => {
     done();
   });
 });
+
+describe("DELETE /customers", () => {
+  it("respond with status 200 because of the deletion", async (done) => {
+    await request(app)
+      .delete("/customers/" + 1)
+      .expect(200);
+    done();
+  });
+});

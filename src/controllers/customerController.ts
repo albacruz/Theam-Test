@@ -14,3 +14,9 @@ export async function createCustomer(req, res) {
   await getConnection().manager.save(newCustomer);
   res.send(newCustomer);
 }
+
+export async function deleteCustomer(req, res) {
+  const customerToRemove = await getConnection().manager.findOne(req.params.id);
+  await getConnection().manager.remove(customerToRemove);
+  res.send(req.params.id);
+}

@@ -4,3 +4,4 @@ export const customerRouter = express.Router();
 
 customerRouter.get("/", customerController.getAllCustomers);
 customerRouter.post("/", customerController.createCustomer);
+customerRouter.delete("/:id", customerController.deleteCustomer);
