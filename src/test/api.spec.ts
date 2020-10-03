@@ -1,6 +1,7 @@
 import * as request from "supertest";
 import { app } from "../server";
 import { customer1 } from "./fixtures/customers";
+import { customerUpdated } from "./fixtures/customers";
 import { connection } from "../server";
 
 let newid;
@@ -42,6 +43,20 @@ describe("GET /customers", () => {
     await request(app)
       .get("/customers/" + newid)
       .expect("Content-Type", /json/)
+      .expect(200);
+    done();
+  });
+});
+
+/**
+ * Testing update one customer endpoint
+ */
+
+describe("PUT /customers", () => {
+  it("respond 200 status code if it updates correctly indicated customer", async (done) => {
+    await request(app)
+      .put("/customers/" + newid)
+      .send(customerUpdated)
       .expect(200);
     done();
   });

@@ -5,3 +5,8 @@ export const customer1 = {
   createdBy: "03",
   lastUpdatedBy: "04",
 };
+
+export const customerUpdated = {
+  name: "Cruz Torres",
+  createdBy: "05",
+};

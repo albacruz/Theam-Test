@@ -5,18 +5,18 @@ export class Customer {
   @PrimaryGeneratedColumn()
   id: number;
 
-  @Column({ nullable: false })
+  @Column()
   name: string;
 
-  @Column({ nullable: false })
+  @Column()
   surname: string;
 
-  @Column()
+  @Column({ nullable: true })
   photo: string;
 
-  @Column()
+  @Column({ nullable: true })
   createdBy: number;
 
-  @Column()
+  @Column({ nullable: true })
   lastUpdatedBy: number;
 }
