@@ -12,3 +12,12 @@ export async function createUser(req, res) {
     })
     .catch((error) => console.log(error));
 }
+
+export async function getAllUsers(req, res) {
+  await getConnection()
+    .manager.find(User)
+    .then((users) => {
+      res.send(users);
+    })
+    .catch((error) => console.log(error));
+}

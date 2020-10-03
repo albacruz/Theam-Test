@@ -26,3 +26,10 @@ describe("POST /users", () => {
     done();
   });
 });
+
+describe("GET /users", () => {
+  it("respond with json structure containing all shop users", async (done) => {
+    await request(app).get("/users").expect("Content-Type", /json/).expect(200);
+    done();
+  });
+});
