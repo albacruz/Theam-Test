@@ -1,9 +1,14 @@
 import { Customer } from "../entity/Customer";
 import { getConnection } from "typeorm";
+import { runInNewContext } from "vm";
 
 export async function getAllCustomers(req, res) {
-  const customers = await getConnection().manager.find(Customer);
-  res.json(customers);
+  await getConnection()
+    .manager.find(Customer)
+    .then((customers) => {
+      res.send(customers);
+    })
+    .catch((error) => console.log(error));
 }
 
 export async function createCustomer(req, res) {
@@ -11,12 +16,19 @@ export async function createCustomer(req, res) {
   newCustomer.name = req.body.name;
   newCustomer.surname = req.body.surname;
   newCustomer.photo = req.body.photo;
-  await getConnection().manager.save(newCustomer);
-  res.send(newCustomer);
+  await getConnection()
+    .manager.save(newCustomer)
+    .then(() => {
+      res.send(newCustomer);
+    })
+    .catch((error) => console.log(error));
 }
 
 export async function deleteCustomer(req, res) {
-  const customerToRemove = await getConnection().manager.findOne(req.params.id);
-  await getConnection().manager.remove(customerToRemove);
-  res.send(req.params.id);
+  await getConnection()
+    .manager.delete(Customer, req.params.id)
+    .then(() => {
+      res.send(req.params.id);
+    })
+    .catch((error) => console.log(error));
 }
