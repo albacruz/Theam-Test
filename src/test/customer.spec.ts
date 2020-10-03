@@ -4,7 +4,7 @@ import { customer1 } from "./fixtures/customers";
 import { customerUpdated } from "./fixtures/customers";
 import { connection } from "../server";
 
-let newid;
+let newid = 0;
 
 beforeAll(async () => {
   await connection;
