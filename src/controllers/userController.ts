@@ -30,3 +30,12 @@ export async function getUser(req, res) {
     })
     .catch((error) => console.log(error));
 }
+
+export async function deleteUser(req, res) {
+  await getConnection()
+    .manager.delete(User, req.params.id)
+    .then(() => {
+      res.send(req.params.id);
+    })
+    .catch((error) => console.log(error));
+}

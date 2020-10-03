@@ -43,3 +43,16 @@ describe("GET /users", () => {
     done();
   });
 });
+
+/**
+ * Testing delete one user endpoint
+ */
+
+describe("DELETE /users", () => {
+  it("respond with status 200 because of the deletion", async (done) => {
+    await request(app)
+      .delete("/users/" + newid)
+      .expect(200);
+    done();
+  });
+});
