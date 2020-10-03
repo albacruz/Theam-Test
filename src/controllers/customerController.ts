@@ -1,12 +1,20 @@
 import { Customer } from "../entity/Customer";
 import { getConnection } from "typeorm";
-import { runInNewContext } from "vm";
 
 export async function getAllCustomers(req, res) {
   await getConnection()
     .manager.find(Customer)
     .then((customers) => {
       res.send(customers);
+    })
+    .catch((error) => console.log(error));
+}
+
+export async function getCustomer(req, res) {
+  await getConnection()
+    .manager.findOne(Customer, req.params.id)
+    .then((customer) => {
+      res.send(customer);
     })
     .catch((error) => console.log(error));
 }

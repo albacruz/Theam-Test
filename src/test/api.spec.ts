@@ -21,6 +21,20 @@ describe("GET /customers", () => {
 });
 
 /**
+ * Testing get one customer endpoint
+ */
+
+describe("GET /customers", () => {
+  it("respond with json structure containing one customer information", async (done) => {
+    await request(app)
+      .get("/customers/" + 2)
+      .expect("Content-Type", /json/)
+      .expect(200);
+    done();
+  });
+});
+
+/**
  * Testing create new customer endpoint
  */
 
