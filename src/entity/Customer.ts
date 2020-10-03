@@ -13,4 +13,10 @@ export class Customer {
 
   @Column()
   photo: string;
+
+  @Column()
+  createdBy: number;
+
+  @Column()
+  lastUpdatedBy: number;
 }
