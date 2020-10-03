@@ -21,3 +21,12 @@ export async function getAllUsers(req, res) {
     })
     .catch((error) => console.log(error));
 }
+
+export async function getUser(req, res) {
+  await getConnection()
+    .manager.findOne(User, req.params.id)
+    .then((user) => {
+      res.send(user);
+    })
+    .catch((error) => console.log(error));
+}

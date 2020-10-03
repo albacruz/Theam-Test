@@ -28,7 +28,7 @@ describe("POST /customers", () => {
 });
 
 /**
- * Testing get all customers endpoint
+ * Testing get all customers or just one endpoint
  */
 
 describe("GET /customers", () => {

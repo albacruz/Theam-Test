@@ -11,7 +11,7 @@ beforeAll(async () => {
 });
 
 /**
- * Testing create new customer endpoint
+ * Testing create new user endpoint
  */
 
 describe("POST /users", () => {
@@ -27,9 +27,19 @@ describe("POST /users", () => {
   });
 });
 
+/**
+ * Testing get all users or just one endpoint
+ */
 describe("GET /users", () => {
   it("respond with json structure containing all shop users", async (done) => {
     await request(app).get("/users").expect("Content-Type", /json/).expect(200);
+    done();
+  });
+  it("respond with json structure containing one user information", async (done) => {
+    await request(app)
+      .get("/users/" + newid)
+      .expect("Content-Type", /json/)
+      .expect(200);
     done();
   });
 });
