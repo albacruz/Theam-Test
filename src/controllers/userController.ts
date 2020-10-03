@@ -27,7 +27,7 @@ export async function getAllUsers(req, res) {
   await getConnection()
     .manager.find(User)
     .then((users) => {
-      const usersToSend = users.map((user) => filterUserData(user));
+      const usersToSend = users.map(filterUserData);
       res.send(usersToSend);
     })
     .catch((error) => console.log(error));
