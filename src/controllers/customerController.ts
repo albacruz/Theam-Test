@@ -2,6 +2,7 @@ import { Customer } from "../entity/Customer";
 import { getConnection } from "typeorm";
 
 export async function createCustomer(req, res) {
+  console.log(req.user);
   const newCustomer = new Customer();
   newCustomer.name = req.body.name;
   newCustomer.surname = req.body.surname;

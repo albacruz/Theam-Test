@@ -16,7 +16,6 @@ export async function loginUser(req, res) {
       { id: user.id, username: user.username, role: user.role },
       accessTokenSecret
     );
-
     res.json({
       accesToken,
     });
