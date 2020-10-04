@@ -4,6 +4,7 @@ import * as express from "express";
 import * as morgan from "morgan";
 import { customerRouter } from "./routers/customerRouter";
 import { userRouter } from "./routers/userRouter";
+import { authRouter } from "./routers/authRouter";
 import { createConnection } from "typeorm";
 
 export const app = express();
@@ -35,3 +36,4 @@ app.use(morgan("tiny"));
 
 app.use("/customers", customerRouter);
 app.use("/users", userRouter);
+app.use("/auth", authRouter);
