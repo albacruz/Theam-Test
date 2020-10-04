@@ -2,6 +2,7 @@ import * as request from "supertest";
 import { app } from "../server";
 import { user1 } from "./fixtures/users";
 import { userUpdated } from "./fixtures/users";
+import { adminJWT } from "./fixtures/users";
 import { connection } from "../server";
 
 let newid = 0;
@@ -19,6 +20,7 @@ describe("POST /users", () => {
     const response = await request(app)
       .post("/users")
       .send(user1)
+      .auth(adminJWT, { type: "bearer" })
       .expect("Content-Type", /json/)
       .expect(200);
     newid = response.body.id;
@@ -32,12 +34,17 @@ describe("POST /users", () => {
  */
 describe("GET /users", () => {
   it("respond with json structure containing all shop users", async (done) => {
-    await request(app).get("/users").expect("Content-Type", /json/).expect(200);
+    await request(app)
+      .get("/users")
+      .auth(adminJWT, { type: "bearer" })
+      .expect("Content-Type", /json/)
+      .expect(200);
     done();
   });
   it("respond with json structure containing one user information", async (done) => {
     await request(app)
       .get("/users/" + newid)
+      .auth(adminJWT, { type: "bearer" })
       .expect("Content-Type", /json/)
       .expect(200);
     done();
@@ -48,11 +55,12 @@ describe("GET /users", () => {
  * Testing update one user endpoint
  */
 
-describe("PUT /customers", () => {
+describe("PUT /users", () => {
   it("respond 200 status code if it updates correctly indicated user", async (done) => {
     await request(app)
       .put("/users/" + newid)
       .send(userUpdated)
+      .auth(adminJWT, { type: "bearer" })
       .expect(200);
     done();
   });
@@ -66,6 +74,7 @@ describe("DELETE /users", () => {
   it("respond with status 200 because of the deletion", async (done) => {
     await request(app)
       .delete("/users/" + newid)
+      .auth(adminJWT, { type: "bearer" })
       .expect(200);
     done();
   });

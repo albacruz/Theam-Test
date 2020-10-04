@@ -1,4 +1,4 @@
-import { Customer } from "../entity/Customer";
+import { Customer } from "../entities/Customer";
 import { getConnection } from "typeorm";
 
 export async function createCustomer(req, res) {

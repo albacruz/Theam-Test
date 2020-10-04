@@ -1,4 +1,4 @@
-import { User } from "../entity/User";
+import { User } from "../entities/User";
 import { getConnection } from "typeorm";
 import * as jwt from "jsonwebtoken";
 

@@ -18,7 +18,7 @@ export const connection = createConnection({
   database: "theamshop",
   synchronize: true,
   logging: false,
-  entities: ["src/entity/**/*.ts"],
+  entities: ["src/entities/**/*.ts"],
   migrations: ["src/migration/**/*.ts"],
   subscribers: ["src/subscriber/**/*.ts"],
   cli: {
@@ -27,7 +27,7 @@ export const connection = createConnection({
     subscribersDir: "src/subscriber",
   },
 })
-  .then(() => console.log("hola"))
+  .then(() => console.log("Connected to db"))
   .catch((error) => console.log(error));
 
 app.use(express.json());
