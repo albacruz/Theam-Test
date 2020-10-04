@@ -48,8 +48,6 @@ describe("POST /customers", () => {
       .post("/customers")
       .send(customer1)
       .expect(401);
-    newid = response.body.id;
-    console.log(response.body);
     done();
   });
 });
