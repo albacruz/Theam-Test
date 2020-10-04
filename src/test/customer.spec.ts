@@ -44,10 +44,7 @@ describe("POST /customers", () => {
   });
 
   it("responds with json structure containing 401 error because of an unauthorized user triying to create a customer", async (done) => {
-    const response = await request(app)
-      .post("/customers")
-      .send(customer1)
-      .expect(401);
+    await request(app).post("/customers").send(customer1).expect(401);
     done();
   });
 });
