@@ -7,7 +7,7 @@ export async function createCustomer(req, res) {
   newCustomer.name = req.body.name;
   newCustomer.surname = req.body.surname;
   newCustomer.photo = req.body.photo;
-  newCustomer.createdBy = req.body.createdBy;
+  newCustomer.userid = req.user.id;
   newCustomer.lastUpdatedBy = req.body.lastUpdatedBy;
   await getConnection()
     .manager.save(newCustomer)

@@ -1,6 +1,7 @@
 import * as request from "supertest";
 import { app } from "../server";
 import { User } from "../entities/User";
+import { Customer } from "../entities/Customer";
 import { getConnection } from "typeorm";
 import { connection } from "../server";
 import { customer1 } from "./fixtures/customers";
@@ -9,53 +10,46 @@ import { adminJWT } from "./fixtures/users";
 import { userJWT } from "./fixtures/users";
 import { Role } from "../entities/User";
 
-let newid = 0;
-let newidAdmin = 0;
-let newidUser = 0;
-let newUserAdmin;
-let newUser;
+let newid = 0,
+  createdIdByAdmin = 0,
+  createdIdByUser = 0;
 
-beforeAll(async () => {
-  await connection;
+let newUserAdmin, newUser, newCustomer;
+
+async function createAdmin() {
   newUserAdmin = new User();
   newUserAdmin.username = "albacruz";
   newUserAdmin.password = "1234";
   newUserAdmin.role = "admin" as Role;
 
-  await getConnection()
-    .manager.save(newUserAdmin)
-    .then(() => {
-      console.log("Test admin correctly created");
-    })
-    .catch((error) => console.log(error));
+  const responseAdmin = await getConnection().manager.save(newUserAdmin);
+  newUserAdmin = responseAdmin;
+  console.log("admin", responseAdmin);
+}
 
+async function createUser() {
   newUser = new User();
   newUser.username = "aaronperez";
   newUser.password = "1234";
   newUser.role = "user" as Role;
 
-  await getConnection()
-    .manager.save(newUser)
-    .then(() => {
-      console.log("Test user correctly created");
-    })
-    .catch((error) => console.log(error));
+  const responseUser = await getConnection().manager.save(newUser);
+  newUser = responseUser;
+}
+
+beforeAll(async () => {
+  await connection;
+  await createAdmin();
+  await createUser();
 });
 
 afterAll(async () => {
-  await getConnection()
-    .manager.delete(User, newUserAdmin)
-    .then(() => {
-      console.log("Test admin correctly deleted");
-    })
-    .catch((error) => console.log(error));
-
-  await getConnection()
-    .manager.delete(User, newUser)
-    .then(() => {
-      console.log("Test admin correctly deleted");
-    })
-    .catch((error) => console.log(error));
+  await getConnection().manager.delete(User, newUserAdmin);
+  await getConnection().manager.delete(User, newUser);
+  await getConnection().manager.query(`
+    TRUNCATE customer RESTART IDENTITY CASCADE;
+    TRUNCATE "user" RESTART IDENTITY CASCADE;
+  `);
 });
 /**
  * Testing create new customer endpoint
@@ -69,7 +63,7 @@ describe("POST /customers", () => {
       .auth(adminJWT, { type: "bearer" })
       .expect("Content-Type", /json/)
       .expect(200);
-    newidAdmin = response.body.id;
+    createdIdByAdmin = response.body.id;
     console.log(response.body);
     done();
   });
@@ -81,13 +75,24 @@ describe("POST /customers", () => {
       .auth(userJWT, { type: "bearer" })
       .expect("Content-Type", /json/)
       .expect(200);
-    newidUser = response.body.id;
+    createdIdByUser = response.body.id;
     console.log(response.body);
     done();
   });
 
   it("responds with json structure containing 401 error because of an unauthorized user triying to create a customer", async (done) => {
     await request(app).post("/customers").send(customer1).expect(401);
+    done();
+  });
+
+  it("responds with json structure containing created customer information when a user creates it", async (done) => {
+    const response = await request(app)
+      .post("/customers")
+      .send(customer1)
+      .auth(userJWT, { type: "bearer" });
+    console.log("respuesta2 ", response.body.createdBy);
+    console.log("respuestadmin", newUserAdmin.id);
+    expect(newUserAdmin.id).toEqual(response.body.createdBy);
     done();
   });
 });
@@ -107,7 +112,7 @@ describe("GET /customers", () => {
   });
   it("responds with json structure containing one customer information when admin calls endpoint", async (done) => {
     await request(app)
-      .get("/customers/" + newidAdmin)
+      .get("/customers/" + createdIdByAdmin)
       .auth(adminJWT, { type: "bearer" })
       .expect("Content-Type", /json/)
       .expect(200);
@@ -124,7 +129,7 @@ describe("GET /customers", () => {
   });
   it("responds with json structure containing one customer information when user calls endpoint", async (done) => {
     await request(app)
-      .get("/customers/" + newidUser)
+      .get("/customers/" + createdIdByUser)
       .auth(userJWT, { type: "bearer" })
       .expect("Content-Type", /json/)
       .expect(200);
@@ -153,7 +158,7 @@ describe("GET /customers", () => {
 describe("PUT /customers", () => {
   it("responds 200 status code if it updates correctly indicated customer when admin calls endpoint", async (done) => {
     await request(app)
-      .put("/customers/" + newidAdmin)
+      .put("/customers/" + createdIdByAdmin)
       .auth(adminJWT, { type: "bearer" })
       .send(customerUpdated)
       .expect(200);
@@ -161,7 +166,7 @@ describe("PUT /customers", () => {
   });
   it("responds 200 status code if it updates correctly indicated customer when user calls endpoint", async (done) => {
     await request(app)
-      .put("/customers/" + newidUser)
+      .put("/customers/" + createdIdByUser)
       .auth(userJWT, { type: "bearer" })
       .send(customerUpdated)
       .expect(200);
@@ -183,14 +188,14 @@ describe("PUT /customers", () => {
 describe("DELETE /customers", () => {
   it("responds with status 200 because of the deletion when admin calls endpoint", async (done) => {
     await request(app)
-      .delete("/customers/" + newidAdmin)
+      .delete("/customers/" + createdIdByAdmin)
       .auth(adminJWT, { type: "bearer" })
       .expect(200);
     done();
   });
   it("responds with status 200 because of the deletion when user calls endpoint", async (done) => {
     await request(app)
-      .delete("/customers/" + newidUser)
+      .delete("/customers/" + createdIdByUser)
       .auth(adminJWT, { type: "bearer" })
       .expect(200);
     done();
