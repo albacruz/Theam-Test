@@ -1,19 +1,62 @@
 import * as request from "supertest";
 import { app } from "../server";
+import { User } from "../entities/User";
+import { getConnection } from "typeorm";
+import { connection } from "../server";
 import { customer1 } from "./fixtures/customers";
 import { customerUpdated } from "./fixtures/customers";
 import { adminJWT } from "./fixtures/users";
 import { userJWT } from "./fixtures/users";
-import { connection } from "../server";
+import { Role } from "../entities/User";
 
 let newid = 0;
 let newidAdmin = 0;
 let newidUser = 0;
+let newUserAdmin;
+let newUser;
 
 beforeAll(async () => {
   await connection;
+  newUserAdmin = new User();
+  newUserAdmin.username = "albacruz";
+  newUserAdmin.password = "1234";
+  newUserAdmin.role = "admin" as Role;
+
+  await getConnection()
+    .manager.save(newUserAdmin)
+    .then(() => {
+      console.log("Test admin correctly created");
+    })
+    .catch((error) => console.log(error));
+
+  newUser = new User();
+  newUser.username = "aaronperez";
+  newUser.password = "1234";
+  newUser.role = "user" as Role;
+
+  await getConnection()
+    .manager.save(newUser)
+    .then(() => {
+      console.log("Test user correctly created");
+    })
+    .catch((error) => console.log(error));
 });
 
+afterAll(async () => {
+  await getConnection()
+    .manager.delete(User, newUserAdmin)
+    .then(() => {
+      console.log("Test admin correctly deleted");
+    })
+    .catch((error) => console.log(error));
+
+  await getConnection()
+    .manager.delete(User, newUser)
+    .then(() => {
+      console.log("Test admin correctly deleted");
+    })
+    .catch((error) => console.log(error));
+});
 /**
  * Testing create new customer endpoint
  */
