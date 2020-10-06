@@ -26,18 +26,18 @@ export class User {
   @Column({ type: "enum", enum: Role })
   role: Role;
 
-  @DeleteDateColumn()
-  deletedAt?: Date;
+  @Column({ default: false })
+  isDeleted: boolean;
 
-  @OneToMany(() => Customer, (customer) => customer.createdBy, {
+  @OneToMany((type) => Customer, (customer) => customer.userCr, {
     onUpdate: "CASCADE",
+    eager: true,
   })
   createdCustomers: Customer[];
-  createdBy: User["id"];
 
-  @OneToMany(() => Customer, (customer) => customer.lastUpdatedBy, {
+  @OneToMany((type) => Customer, (customer) => customer.userUp, {
     onUpdate: "CASCADE",
+    eager: true,
   })
   updatedCustomers: Customer[];
-  lastUpdatedBy: User["id"];
 }

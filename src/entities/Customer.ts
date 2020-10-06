@@ -21,14 +21,20 @@ export class Customer {
   @Column({ nullable: true })
   photo: string;
 
+  @Column()
+  createdBy: number;
+
+  @Column({ nullable: true })
+  lastUpdatedBy: number;
+
   @ManyToOne(() => User, (user) => user.createdCustomers)
   @JoinColumn({ name: "createdBy", referencedColumnName: "id" })
-  createdBy: User["id"];
+  userCr: User;
 
   @ManyToOne(() => User, (user) => user.updatedCustomers, {
     onUpdate: "RESTRICT",
     nullable: true,
   })
   @JoinColumn({ name: "lastUpdatedBy", referencedColumnName: "id" })
-  lastUpdatedBy: User["id"];
+  userUp: User;
 }

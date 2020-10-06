@@ -7,6 +7,7 @@ function filterUserData(user) {
     id: user.id,
     username: user.username,
     role: user.role,
+    isDeleted: user.isDeleted,
   };
   return filteredUser;
 }
@@ -35,7 +36,7 @@ export async function createUser(req, res) {
 export async function getAllUsers(req, res) {
   if (req.user.role == Role.ADMIN) {
     await getConnection()
-      .manager.find(User)
+      .manager.find(User, { where: { isDeleted: false } })
       .then((users) => {
         const usersToSend = users.map(filterUserData);
         res.send(usersToSend);
@@ -71,9 +72,10 @@ export async function getUser(req, res) {
 export async function deleteUser(req, res) {
   if (req.user.role == Role.ADMIN) {
     await getConnection()
-      .manager.softDelete(User, req.params.id)
-      .then(() => {
-        res.send(req.params.id);
+      .manager.update(User, req.params.id, { isDeleted: true })
+      .then((response) => {
+        console.log(response);
+        res.send(response);
       })
       .catch((error) => console.log(error));
   } else {
