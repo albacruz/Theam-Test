@@ -1,5 +1,6 @@
 import { User } from "../entities/User";
 import { getConnection } from "typeorm";
+import { hashPassword } from "./userController";
 import * as jwt from "jsonwebtoken";
 
 const accessTokenSecret = "0123456789";
@@ -8,10 +9,12 @@ export async function loginUser(req, res) {
   const { username, password } = req.body;
 
   const user = await getConnection().manager.findOne(User, {
-    where: { username: username, password: password },
+    where: { username: username },
   });
 
-  if (user) {
+  const hashedPassword = hashPassword(password, user.salt);
+
+  if (hashedPassword === user.password) {
     const accesToken = jwt.sign(
       { id: user.id, username: user.username, role: user.role },
       accessTokenSecret

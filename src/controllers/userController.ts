@@ -1,7 +1,17 @@
 import { User } from "../entities/User";
 import { getConnection } from "typeorm";
 import { Role } from "../entities/User";
+import * as crypto from "crypto";
 
+function generateSalt() {
+  return crypto.randomBytes(32).toString("hex");
+}
+
+export function hashPassword(password, salt) {
+  let hash = crypto.createHmac("sha512", salt);
+  hash.update(password);
+  return hash.digest("hex");
+}
 function filterUserData(user) {
   const filteredUser = {
     id: user.id,
@@ -16,7 +26,9 @@ export async function createUser(req, res) {
   if (req.user.role == Role.ADMIN) {
     const newUser = new User();
     newUser.username = req.body.username;
-    newUser.password = req.body.password;
+    const userSalt = generateSalt();
+    newUser.password = hashPassword(req.body.password, userSalt);
+    newUser.salt = userSalt;
     newUser.role = req.body.role as Role;
     await getConnection()
       .manager.save(newUser)
