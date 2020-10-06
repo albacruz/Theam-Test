@@ -21,15 +21,13 @@ export class Customer {
   @Column({ nullable: true })
   photo: string;
 
-  @Column({ nullable: true, name: "createdBy" })
-  createdBy: number;
-
-  @Column({ nullable: true })
-  lastUpdatedBy: number;
-
-  @ManyToOne(() => User, (user) => user.customers, {
+  @ManyToOne(() => User, (user) => user.createdCustomers, {
     onDelete: "SET NULL",
   })
   @JoinColumn({ name: "createdBy", referencedColumnName: "id" })
-  userid: User["id"];
+  createdBy: User["id"];
+
+  @ManyToOne(() => User, (user) => user.updatedCustomers, { nullable: true })
+  @JoinColumn({ name: "lastUpdatedBy", referencedColumnName: "id" })
+  lastUpdatedBy: User["id"];
 }

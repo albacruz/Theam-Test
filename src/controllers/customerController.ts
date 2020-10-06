@@ -7,8 +7,7 @@ export async function createCustomer(req, res) {
   newCustomer.name = req.body.name;
   newCustomer.surname = req.body.surname;
   newCustomer.photo = req.body.photo;
-  newCustomer.userid = req.user.id;
-  newCustomer.lastUpdatedBy = req.body.lastUpdatedBy;
+  newCustomer.createdBy = req.user.id;
   await getConnection()
     .manager.save(newCustomer)
     .then(() => {
@@ -45,6 +44,8 @@ export async function deleteCustomer(req, res) {
 }
 
 export async function updateCustomer(req, res) {
+  req.body.lastUpdatedBy = req.user.id;
+  console.log("To update", req.body);
   await getConnection()
     .manager.update(Customer, req.params.id, req.body)
     .then((response) => {

@@ -20,7 +20,11 @@ export class User {
   @Column({ type: "enum", enum: Role })
   role: Role;
 
-  @OneToMany(() => Customer, (customer) => customer.userid)
-  customers: Customer[];
-  userid: User["id"];
+  @OneToMany(() => Customer, (customer) => customer.createdBy)
+  createdCustomers: Customer[];
+  createdBy: User["id"];
+
+  @OneToMany(() => Customer, (customer) => customer.lastUpdatedBy)
+  updatedCustomers: Customer[];
+  lastUpdatedBy: User["id"];
 }
