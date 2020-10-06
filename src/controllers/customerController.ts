@@ -18,7 +18,7 @@ export async function createCustomer(req, res) {
 
 export async function getAllCustomers(req, res) {
   await getConnection()
-    .manager.find(Customer)
+    .manager.find(Customer, { where: { isDeleted: false } })
     .then((customers) => {
       res.send(customers);
     })
@@ -36,9 +36,10 @@ export async function getCustomer(req, res) {
 
 export async function deleteCustomer(req, res) {
   await getConnection()
-    .manager.delete(Customer, req.params.id)
-    .then(() => {
-      res.send(req.params.id);
+    .manager.update(Customer, req.params.id, { isDeleted: true })
+    .then((response) => {
+      console.log(response);
+      res.send(response);
     })
     .catch((error) => console.log(error));
 }

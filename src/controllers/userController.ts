@@ -24,18 +24,26 @@ function filterUserData(user) {
 
 export async function createUser(req, res) {
   if (req.user.role == Role.ADMIN) {
-    const newUser = new User();
-    newUser.username = req.body.username;
-    const userSalt = generateSalt();
-    newUser.password = hashPassword(req.body.password, userSalt);
-    newUser.salt = userSalt;
-    newUser.role = req.body.role as Role;
-    await getConnection()
-      .manager.save(newUser)
-      .then(() => {
-        res.send(newUser);
-      })
-      .catch((error) => console.log(error));
+    const alreadyExists = await getConnection().manager.find(User, {
+      where: { username: req.body.username },
+    });
+
+    if (!alreadyExists) {
+      const newUser = new User();
+      newUser.username = req.body.username;
+      const userSalt = generateSalt();
+      newUser.password = hashPassword(req.body.password, userSalt);
+      newUser.salt = userSalt;
+      newUser.role = req.body.role as Role;
+      await getConnection()
+        .manager.save(newUser)
+        .then(() => {
+          res.send(newUser);
+        })
+        .catch((error) => console.log(error));
+    } else {
+      res.send("Username already exists");
+    }
   } else {
     res.status(403);
     res.json({

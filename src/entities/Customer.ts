@@ -27,6 +27,9 @@ export class Customer {
   @Column({ nullable: true })
   lastUpdatedBy: number;
 
+  @Column({ default: false })
+  isDeleted: boolean;
+
   @ManyToOne(() => User, (user) => user.createdCustomers)
   @JoinColumn({ name: "createdBy", referencedColumnName: "id" })
   userCr: User;
