@@ -71,7 +71,7 @@ export async function getUser(req, res) {
 export async function deleteUser(req, res) {
   if (req.user.role == Role.ADMIN) {
     await getConnection()
-      .manager.delete(User, req.params.id)
+      .manager.softDelete(User, req.params.id)
       .then(() => {
         res.send(req.params.id);
       })

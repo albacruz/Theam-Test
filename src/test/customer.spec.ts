@@ -1,7 +1,6 @@
 import * as request from "supertest";
 import { app } from "../server";
 import { User } from "../entities/User";
-import { Customer } from "../entities/Customer";
 import { getConnection } from "typeorm";
 import { connection } from "../server";
 import { customer1 } from "./fixtures/customers";
@@ -82,17 +81,6 @@ describe("POST /customers", () => {
 
   it("responds with json structure containing 401 error because of an unauthorized user triying to create a customer", async (done) => {
     await request(app).post("/customers").send(customer1).expect(401);
-    done();
-  });
-
-  it("responds with json structure containing created customer information when a user creates it", async (done) => {
-    const response = await request(app)
-      .post("/customers")
-      .send(customer1)
-      .auth(userJWT, { type: "bearer" });
-    console.log("respuesta2 ", response.body.createdBy);
-    console.log("respuestadmin", newUserAdmin.id);
-    expect(newUserAdmin.id).toEqual(response.body.createdBy);
     done();
   });
 });

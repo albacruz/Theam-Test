@@ -1,4 +1,10 @@
-import { Entity, PrimaryGeneratedColumn, Column, OneToMany } from "typeorm";
+import {
+  Entity,
+  PrimaryGeneratedColumn,
+  Column,
+  OneToMany,
+  DeleteDateColumn,
+} from "typeorm";
 import { Customer } from "./Customer";
 
 export enum Role {
@@ -20,11 +26,18 @@ export class User {
   @Column({ type: "enum", enum: Role })
   role: Role;
 
-  @OneToMany(() => Customer, (customer) => customer.createdBy)
+  @DeleteDateColumn()
+  deletedAt?: Date;
+
+  @OneToMany(() => Customer, (customer) => customer.createdBy, {
+    onUpdate: "CASCADE",
+  })
   createdCustomers: Customer[];
   createdBy: User["id"];
 
-  @OneToMany(() => Customer, (customer) => customer.lastUpdatedBy)
+  @OneToMany(() => Customer, (customer) => customer.lastUpdatedBy, {
+    onUpdate: "CASCADE",
+  })
   updatedCustomers: Customer[];
   lastUpdatedBy: User["id"];
 }
