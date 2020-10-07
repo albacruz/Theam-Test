@@ -2,12 +2,22 @@ import { Customer } from "../entities/Customer";
 import { getConnection } from "typeorm";
 import * as cloudinary from "cloudinary";
 
+cloudinary.v2.config({
+  cloud_name: "dzx8vimj3",
+  api_key: "331429352562424",
+  api_secret: "E86ZxD_fb8S3VOjwAdvotBQjzTA",
+});
 export async function createCustomer(req, res) {
   console.log(req.user);
   const newCustomer = new Customer();
   newCustomer.name = req.body.name;
   newCustomer.surname = req.body.surname;
-  newCustomer.photo = req.body.photo;
+  await cloudinary.v2.uploader
+    .upload(req.files.photo.tempFilePath)
+    .then((response) => {
+      newCustomer.photo = response.secure_url;
+    })
+    .catch((error) => console.log(error));
   newCustomer.createdBy = req.user.id;
   await getConnection()
     .manager.save(newCustomer)

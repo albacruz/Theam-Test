@@ -40,7 +40,7 @@ export async function createUser(req, res) {
       await getConnection()
         .manager.save(newUser)
         .then(() => {
-          res.send(newUser);
+          res.send(filterUserData(newUser));
         })
         .catch((error) => console.log(error));
     }
