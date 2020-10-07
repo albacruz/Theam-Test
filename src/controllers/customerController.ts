@@ -1,12 +1,15 @@
 import { Customer } from "../entities/Customer";
 import { getConnection } from "typeorm";
 import * as cloudinary from "cloudinary";
+import * as dotenv from "dotenv";
+dotenv.config();
 
 cloudinary.v2.config({
-  cloud_name: "dzx8vimj3",
-  api_key: "331429352562424",
-  api_secret: "E86ZxD_fb8S3VOjwAdvotBQjzTA",
+  cloud_name: process.env["CLOUDINARY_NAME"],
+  api_key: process.env["CLOUDINARY_KEY"],
+  api_secret: process.env["CLOUDINARY_API_SECRET"],
 });
+
 export async function createCustomer(req, res) {
   console.log(req.user);
   const newCustomer = new Customer();

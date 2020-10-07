@@ -2,8 +2,10 @@ import { User } from "../entities/User";
 import { getConnection } from "typeorm";
 import { hashPassword } from "./userController";
 import * as jwt from "jsonwebtoken";
+import * as dotenv from "dotenv";
+dotenv.config();
 
-const accessTokenSecret = "0123456789";
+const accessTokenSecret = process.env["CLOUDINARY_API_SECRET"];
 
 export async function loginUser(req, res) {
   const { username, password } = req.body;
