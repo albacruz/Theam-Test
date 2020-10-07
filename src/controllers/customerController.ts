@@ -1,5 +1,6 @@
 import { Customer } from "../entities/Customer";
 import { getConnection } from "typeorm";
+import * as cloudinary from "cloudinary";
 
 export async function createCustomer(req, res) {
   console.log(req.user);

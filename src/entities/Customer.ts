@@ -30,13 +30,16 @@ export class Customer {
   @Column({ default: false })
   isDeleted: boolean;
 
-  @ManyToOne(() => User, (user) => user.createdCustomers)
+  @ManyToOne(() => User, (user) => user.createdCustomers, {
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE",
+  })
   @JoinColumn({ name: "createdBy", referencedColumnName: "id" })
   userCr: User;
 
   @ManyToOne(() => User, (user) => user.updatedCustomers, {
-    onUpdate: "RESTRICT",
-    nullable: true,
+    onUpdate: "CASCADE",
+    onDelete: "CASCADE",
   })
   @JoinColumn({ name: "lastUpdatedBy", referencedColumnName: "id" })
   userUp: User;

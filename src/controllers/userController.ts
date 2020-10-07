@@ -28,7 +28,9 @@ export async function createUser(req, res) {
       where: { username: req.body.username },
     });
 
-    if (!alreadyExists) {
+    if (typeof alreadyExists !== "undefined" && alreadyExists.length > 0) {
+      res.send("Username already exists");
+    } else {
       const newUser = new User();
       newUser.username = req.body.username;
       const userSalt = generateSalt();
@@ -41,8 +43,6 @@ export async function createUser(req, res) {
           res.send(newUser);
         })
         .catch((error) => console.log(error));
-    } else {
-      res.send("Username already exists");
     }
   } else {
     res.status(403);

@@ -23,7 +23,7 @@ export class User {
   @Column()
   password: string;
 
-  @Column()
+  @Column({ nullable: true })
   salt: string;
 
   @Column({ type: "enum", enum: Role })
@@ -34,12 +34,14 @@ export class User {
 
   @OneToMany((type) => Customer, (customer) => customer.userCr, {
     onUpdate: "CASCADE",
+    onDelete: "CASCADE",
     eager: true,
   })
   createdCustomers: Customer[];
 
   @OneToMany((type) => Customer, (customer) => customer.userUp, {
     onUpdate: "CASCADE",
+    onDelete: "CASCADE",
     eager: true,
   })
   updatedCustomers: Customer[];

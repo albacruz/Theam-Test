@@ -27,7 +27,7 @@ describe("POST /users", () => {
       .expect("Content-Type", /json/)
       .expect(200);
     newidAdmin = response.body.id;
-    console.log(response.body);
+    console.log("Respuesta", response.body);
     done();
   });
   it("respond with json structure containing 403 error because of a non admin privilege user trying to create new user", async (done) => {
@@ -42,7 +42,7 @@ describe("POST /users", () => {
     done();
   });
   it("respond with json structure containing 401 error because of an unauthorized user triying to create new user", async (done) => {
-    const response = await request(app)
+    await request(app)
       .post("/users")
       .send(user1)
       .expect("Content-Type", /json/)
