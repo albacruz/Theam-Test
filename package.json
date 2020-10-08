@@ -17,6 +17,7 @@
     "dotenv": "^8.2.0",
     "express": "^4.17.1",
     "express-fileupload": "^1.2.0",
+    "helmet": "^4.1.1",
     "jest": "^26.4.2",
     "jsonwebtoken": "^8.5.1",
     "morgan": "^1.10.0",
@@ -24,7 +25,8 @@
     "pg": "^8.3.3",
     "reflect-metadata": "^0.1.10",
     "ts-jest": "^26.4.1",
-    "typeorm": "0.2.28"
+    "typeorm": "0.2.28",
+    "xss-clean": "^0.1.1"
   },
   "scripts": {
     "start": "ts-node src/index.ts",

@@ -7,6 +7,9 @@ import { authRouter } from "./routers/authRouter";
 import { createConnection } from "typeorm";
 import * as fileupload from "express-fileupload";
 import * as dotenv from "dotenv";
+import * as xss from "xss-clean";
+import * as helmet from "helmet";
+
 dotenv.config();
 
 export const app = express();
@@ -32,10 +35,11 @@ export const connection = createConnection({
   .then(() => console.log("Connected to db"))
   .catch((error) => console.log(error));
 
-app.use(express.json());
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("tiny"));
 app.use(fileupload({ useTempFiles: true }));
+app.use(xss());
+app.use(helmet());
 
 app.use("/customers", customerRouter);
 app.use("/users", userRouter);
