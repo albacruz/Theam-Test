@@ -1,7 +1,7 @@
 export const customer1 = {
   name: "Cruz",
   surname: "Alba",
-  photo: "image.jpg",
+  photo: "",
 };
 
 export const customerUpdated = {

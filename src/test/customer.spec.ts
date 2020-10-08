@@ -8,6 +8,7 @@ import { customerUpdated } from "./fixtures/customers";
 import { adminJWT } from "./fixtures/users";
 import { userJWT } from "./fixtures/users";
 import { Role } from "../entities/User";
+import * as fs from "mz/fs";
 
 let newid = 0,
   createdIdByAdmin = 0,
@@ -56,9 +57,12 @@ afterAll(async () => {
 
 describe("POST /customers", () => {
   it("responds with json structure containing created customer information when an admin creates it", async (done) => {
+    const filePath = `${__dirname}/fixtures/testPicture.png`;
     const response = await request(app)
       .post("/customers")
-      .send(customer1)
+      .attach("photo", filePath)
+      .field("name", customer1.name)
+      .field("surname", customer1.surname)
       .auth(adminJWT, { type: "bearer" })
       .expect("Content-Type", /json/)
       .expect(200);
@@ -68,9 +72,12 @@ describe("POST /customers", () => {
   });
 
   it("responds with json structure containing created customer information when a user creates it", async (done) => {
+    const filePath = `${__dirname}/fixtures/testPicture.png`;
     const response = await request(app)
       .post("/customers")
-      .send(customer1)
+      .attach("photo", filePath)
+      .field("name", customer1.name)
+      .field("surname", customer1.surname)
       .auth(userJWT, { type: "bearer" })
       .expect("Content-Type", /json/)
       .expect(200);
@@ -80,7 +87,13 @@ describe("POST /customers", () => {
   });
 
   it("responds with json structure containing 401 error because of an unauthorized user triying to create a customer", async (done) => {
-    await request(app).post("/customers").send(customer1).expect(401);
+    const filePath = `${__dirname}/fixtures/testPicture.png`;
+    await request(app)
+      .post("/customers")
+      .attach("photo", filePath)
+      .field("name", customer1.name)
+      .field("surname", customer1.surname)
+      .expect(401);
     done();
   });
 });
