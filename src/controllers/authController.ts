@@ -5,7 +5,7 @@ import * as jwt from "jsonwebtoken";
 import * as dotenv from "dotenv";
 dotenv.config();
 
-const accessTokenSecret = process.env["CLOUDINARY_API_SECRET"];
+const accessTokenSecret = process.env["ACCESS_TOKEN"];
 
 export async function loginUser(req, res) {
   const { username, password } = req.body;

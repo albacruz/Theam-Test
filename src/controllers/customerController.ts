@@ -4,6 +4,31 @@ import * as cloudinary from "cloudinary";
 import * as dotenv from "dotenv";
 dotenv.config();
 
+function filterCustomersData(customer) {
+  const filteredCustomer = {
+    id: customer.id,
+    name: customer.name,
+    surname: customer.surname,
+    photo: customer.photo,
+    createdBy: customer.createdBy,
+    lastUpdatedBy: customer.lastUpdatedBy,
+  };
+  return filteredCustomer;
+}
+
+function filterCustomerData(customer) {
+  const filteredCustomer = {
+    id: customer.id,
+    name: customer.name,
+    surname: customer.surname,
+    photo: customer.photo,
+    createdBy: customer.createdBy,
+    lastUpdatedBy: customer.lastUpdatedBy,
+    isDeleted: customer.isDeleted,
+  };
+  return filteredCustomer;
+}
+
 cloudinary.v2.config({
   cloud_name: process.env["CLOUDINARY_NAME"],
   api_key: process.env["CLOUDINARY_KEY"],
@@ -25,7 +50,7 @@ export async function createCustomer(req, res) {
   await getConnection()
     .manager.save(newCustomer)
     .then(() => {
-      res.send(newCustomer);
+      res.send(filterCustomersData(newCustomer));
     })
     .catch((error) => console.log(error));
 }
@@ -34,7 +59,7 @@ export async function getAllCustomers(req, res) {
   await getConnection()
     .manager.find(Customer, { where: { isDeleted: false } })
     .then((customers) => {
-      res.send(customers);
+      res.send(customers.map(filterCustomersData));
     })
     .catch((error) => console.log(error));
 }
@@ -43,7 +68,11 @@ export async function getCustomer(req, res) {
   await getConnection()
     .manager.findOne(Customer, req.params.id)
     .then((customer) => {
-      res.send(customer);
+      if (customer.isDeleted) {
+        res.send(filterCustomerData(customer));
+      } else {
+        res.send(filterCustomersData(customer));
+      }
     })
     .catch((error) => console.log(error));
 }

@@ -8,10 +8,20 @@ function generateSalt() {
 }
 
 export function hashPassword(password, salt) {
+  console.log("password", password);
   let hash = crypto.createHmac("sha512", salt);
   hash.update(password);
   return hash.digest("hex");
 }
+function filterUsersData(user) {
+  const filteredUser = {
+    id: user.id,
+    username: user.username,
+    role: user.role,
+  };
+  return filteredUser;
+}
+
 function filterUserData(user) {
   const filteredUser = {
     id: user.id,
@@ -31,6 +41,7 @@ export async function createUser(req, res) {
     if (typeof alreadyExists !== "undefined" && alreadyExists.length > 0) {
       res.send("Username already exists");
     } else {
+      console.log("req.body", req.body);
       const newUser = new User();
       newUser.username = req.body.username;
       const userSalt = generateSalt();
@@ -40,7 +51,7 @@ export async function createUser(req, res) {
       await getConnection()
         .manager.save(newUser)
         .then(() => {
-          res.send(filterUserData(newUser));
+          res.send(filterUsersData(newUser));
         })
         .catch((error) => console.log(error));
     }
@@ -58,7 +69,7 @@ export async function getAllUsers(req, res) {
     await getConnection()
       .manager.find(User, { where: { isDeleted: false } })
       .then((users) => {
-        const usersToSend = users.map(filterUserData);
+        const usersToSend = users.map(filterUsersData);
         res.send(usersToSend);
       })
       .catch((error) => console.log(error));
@@ -76,8 +87,11 @@ export async function getUser(req, res) {
     await getConnection()
       .manager.findOne(User, req.params.id)
       .then((user) => {
-        const userToSend = filterUserData(user);
-        res.send(userToSend);
+        if (user.isDeleted) {
+          res.send(filterUserData(user));
+        } else {
+          res.send(filterUsersData(user));
+        }
       })
       .catch((error) => console.log(error));
   } else {

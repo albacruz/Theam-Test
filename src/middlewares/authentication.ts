@@ -1,6 +1,8 @@
 import * as jwt from "jsonwebtoken";
+import * as dotenv from "dotenv";
+dotenv.config();
 
-const accessTokenSecret = "0123456789";
+const accessTokenSecret = process.env["ACCESS_TOKEN"];
 
 export const authenticateJWT = (req, res, next) => {
   const authHeader = req.headers.authorization;

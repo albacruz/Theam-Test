@@ -8,7 +8,6 @@ import { connection } from "../server";
 
 let newid = 0;
 let newidAdmin = 0;
-let newidUser = 0;
 
 beforeAll(async () => {
   await connection;
@@ -22,7 +21,9 @@ describe("POST /users", () => {
   it("respond with json structure containing created user information", async (done) => {
     const response = await request(app)
       .post("/users")
-      .send(user1)
+      .field("username", user1.username)
+      .field("password", user1.password)
+      .field("role", user1.role)
       .auth(adminJWT, { type: "bearer" })
       .expect("Content-Type", /json/)
       .expect(200);
@@ -31,14 +32,12 @@ describe("POST /users", () => {
     done();
   });
   it("respond with json structure containing 403 error because of a non admin privilege user trying to create new user", async (done) => {
-    const response = await request(app)
+    await request(app)
       .post("/users")
       .send(user1)
       .auth(userJWT, { type: "bearer" })
       .expect("Content-Type", /json/)
       .expect(403);
-    newidUser = response.body.id;
-    console.log(response.body);
     done();
   });
   it("respond with json structure containing 401 error because of an unauthorized user triying to create new user", async (done) => {
@@ -92,7 +91,7 @@ describe("GET /users", () => {
   });
   it("respond with json structure containing 403 error when a non admin privilege user tries to get one user's information", async (done) => {
     await request(app)
-      .get("/users/" + newidUser)
+      .get("/users/" + newid)
       .auth(userJWT, { type: "bearer" })
       .expect("Content-Type", /json/)
       .expect(403);
@@ -108,7 +107,7 @@ describe("PUT /users", () => {
   it("respond 200 status code if it updates correctly indicated user", async (done) => {
     await request(app)
       .put("/users/" + newidAdmin)
-      .send(userUpdated)
+      .field("username", userUpdated.username)
       .auth(adminJWT, { type: "bearer" })
       .expect(200);
     done();
@@ -122,7 +121,7 @@ describe("PUT /users", () => {
   });
   it("respond with json structure containing 403 error because of a non admin privilege user triying to update one user's information", async (done) => {
     await request(app)
-      .put("/users/" + newidUser)
+      .put("/users/" + newid)
       .send(userUpdated)
       .auth(userJWT, { type: "bearer" })
       .expect(403);
@@ -150,7 +149,7 @@ describe("DELETE /users", () => {
   });
   it("respond with json structure containing 403 error because of a non admin privilege user triying to update one user's information", async (done) => {
     await request(app)
-      .delete("/users/" + newidUser)
+      .delete("/users/" + newid)
       .auth(userJWT, { type: "bearer" })
       .expect(403);
     done();

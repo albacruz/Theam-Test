@@ -8,13 +8,12 @@ import { customerUpdated } from "./fixtures/customers";
 import { adminJWT } from "./fixtures/users";
 import { userJWT } from "./fixtures/users";
 import { Role } from "../entities/User";
-import * as fs from "mz/fs";
 
 let newid = 0,
   createdIdByAdmin = 0,
   createdIdByUser = 0;
 
-let newUserAdmin, newUser, newCustomer;
+let newUserAdmin, newUser;
 
 async function createAdmin() {
   newUserAdmin = new User();
