@@ -12,4 +12,4 @@ EXPOSE 3000
 
 WORKDIR /app/src
 
-CMD node start.js
+CMD node index.ts

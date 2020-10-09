@@ -20,6 +20,9 @@ before_script:
   - docker-compose up -d --build
 after_script:
   - docker-compose down
+addons:
+  jwt:
+    secure: NJ3XZTGwiws2HqViPToNAXk/OBGGsXc7PoOk8N4ZANoqpTxWhnR1lNeDHcePu3HaFxpO9XZ5HCNjKq1qAzHyEhaIv4HpCbIzp9A6olR1F0/UvNluyj9QQc0O1gZ1sL3XSKugG7VxmqWziCPRcQwads1FmKMSyurSbVWQnVnCvQiNbxuamuboepCXvDe45/B6/QmL8gfSgrHZN9NkzbIOkFoIBfNG6JPam4nhgRNJ/mweyTIoZ0FK2tr3BXwoQCNsE0oT4M9KoyfhH9oRbE+fLfvDkPC0OsNGj5wtdCrExn9DW8kEZWoqA+kFa/u3g3H2VsV4vWs/pelJECz+chfhHYjMkzvt/R3OHIY8xFVPgnUwO8ZenrtUhLLJiSwRQfzwG8oNjwA7++5UbQpQbvrKgXVZ+pRfBijsh4NCeE2fmoecf2JiGV0pDPDXyF8rK2DTtbLNZU2YfLTarL5AC0OS/0imCRQNORyZg90l48PYLFGF0ztKZrZxRF1PuwKpG+7ZAvah8QsON/hLZZQYbWsok0MUQgVBRug3grU2m/9GRF+i4zpt4BYthve9RxwXQEM9eflBFOldDjWTPBTaDbjpvC7+Cn9ZrMW6SqnmwUqok0S2Sm+WWpNp7JJJZUF0w4pl1PHuZFiohtP00KZbJGwbYYZTZNQgvBnMQejLaX9o7AY=
 script:
   - npm run test
 deploy:
