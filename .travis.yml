@@ -1,0 +1,13 @@
+language: node_js
+node_js:
+  - "7"
+script:
+  - npm run test
+deploy:
+  provider: heroku
+  api_key:
+    secure: LHsGaZCn87E5KArjwHipWwzqZqDOeKKZ8p2z3RR46acr48h+ZJan18AzULH69iYwMQUCHEdH0TV4oqrslsnGPCBNWWwAsVc2ecw1Ohwyb7+gKh4+lI4zrNzYHRBVID8gJ0H2Tp8KQHc3Xh96V8CIPmIlsDIbyaOnI2fe0A/GxBEBzU79cHi0EySDi9YjflDVvg9rT1aDU5exRfOEU4C9HUxF8cZfiTciio7rAY3aEcjZHvYtISQDxlDLYNpxnBcVhJOGoqaf8fCxaYj0SsAqZT8ISqlOzvoF3TXOR+EpS8/zz503bCQ6NFrkDE2uFLje8HYkcQt8NgF2umbFR2RzCenp9LbDKSTmBE3o8YuSI6ErMGIJYI+wyRMK4Jy5mzMvTUHhRXZqZIA+eRvcz0vGK3lzX3/T7ZT4YBfVJPOxQZX815jrH9bdWL1onRVoUr4v0x8vWj0jPfKUXYeNJNSexfv5qWlCN64uWfsjPvhbg8MYE82no5wxwOQNt4vZV8JgNDIuzYJBXqer17GxZCxPjatpcdeLZNJgtCEi4B7QxoZ3n7tDBMoP8hjv9xFc5B0ju9gVj9CvG4ugVYolUdCOdjrgBKsh2QBByAgX/RmNG6ejoucG3AWCGn/VmEEW0aeW7QA9FNIOzOogEVCmZRqRzPxiblqOgxiSyrJh4nkmTh8=
+  app: theamtest
+  on:
+    repo: albacruz/Theam-Test
+  skip_cleanup: true
