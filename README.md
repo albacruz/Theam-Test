@@ -1,4 +1,4 @@
-# Awesome Project Build with TypeORM
+# Second phase of The Agile Monkeys recruiment process
 
 Steps to run this project:
 
