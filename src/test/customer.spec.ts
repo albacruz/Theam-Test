@@ -66,11 +66,12 @@ describe("POST /customers", () => {
       .attach("photo", filePath)
       .field("name", customer1.name)
       .field("surname", customer1.surname)
-      .auth(adminJWT, { type: "bearer" })
-      .expect("Content-Type", /json/);
+      .auth(adminJWT, { type: "bearer" });
+    // .expect("Content-Type", /json/);
     //    .expect(200);
 
     createdIdByAdmin = response.body.id;
+    console.log("body", response.body);
     console.log("termine el test");
   });
 
