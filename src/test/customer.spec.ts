@@ -1,7 +1,7 @@
 import * as request from "supertest";
 import { createApp } from "../server";
 import { User } from "../entities/User";
-import { getConnection, Connection } from "typeorm";
+import { Connection } from "typeorm";
 import { customer1 } from "./fixtures/customers";
 import { customerUpdated } from "./fixtures/customers";
 import { adminJWT } from "./fixtures/users";
