@@ -64,8 +64,9 @@ describe("POST /customers", () => {
       .field("name", customer1.name)
       .field("surname", customer1.surname)
       .auth(adminJWT, { type: "bearer" })
-      .expect("Content-Type", /json/)
-      .expect(200);
+      .expect("Content-Type", /json/);
+    //    .expect(200);
+
     createdIdByAdmin = response.body.id;
     console.log(response.body);
     done();

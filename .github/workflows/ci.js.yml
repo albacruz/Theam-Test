@@ -31,7 +31,7 @@ jobs:
       - name: Install dependencies
         run: npm install
       - name: Tests
-        run: npm run test
+        run: npm run test -- --runInBand
         env:
           DATABASE_HOST: database
           TYPEORM_DATABASE: theamshop
