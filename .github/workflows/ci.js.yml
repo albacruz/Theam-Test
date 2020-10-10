@@ -18,9 +18,9 @@ jobs:
       database:
         image: postgres:12.2-alpine
         env:
-          POSTGES_DB: theamshop
+          POSTGRES_DB: theamshop
           POSTGRES_USER: albacruz
-          POSTRGRES_PASSWORD: pwd0123456789
+          POSTGRES_PASSWORD: pwd0123456789
         options: >-
           --health-cmd pg_isready
           --health-interval 10s
