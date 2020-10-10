@@ -36,6 +36,7 @@ cloudinary.v2.config({
 });
 
 export async function createCustomer(req, res) {
+  console.log("Empezamos el controlador de createCustomer");
   console.log(req.user);
   const newCustomer = new Customer();
   newCustomer.name = req.body.name;
@@ -53,6 +54,8 @@ export async function createCustomer(req, res) {
       res.send(filterCustomersData(newCustomer));
     })
     .catch((error) => console.log(error));
+
+  console.log("terminamos");
 }
 
 export async function getAllCustomers(req, res) {

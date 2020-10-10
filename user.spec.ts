@@ -1,10 +1,10 @@
 import * as request from "supertest";
-import { app } from "../server";
-import { user1 } from "./fixtures/users";
-import { userUpdated } from "./fixtures/users";
-import { adminJWT } from "./fixtures/users";
-import { userJWT } from "./fixtures/users";
-import { connection } from "../server";
+import { app } from "./src/server";
+import { user1 } from "./src/test/fixtures/users";
+import { userUpdated } from "./src/test/fixtures/users";
+import { adminJWT } from "./src/test/fixtures/users";
+import { userJWT } from "./src/test/fixtures/users";
+import { connection } from "./src/server";
 import { getConnection } from "typeorm";
 
 let newid = 0;

@@ -13,18 +13,28 @@ import { ormconfig } from "../ormconfig";
 
 dotenv.config();
 
-export const app = express();
+export async function createApp() {
+  const app = express();
 
-export const connection = createConnection(ormconfig)
-  .then(() => console.log("Connected to db"))
-  .catch((error) => console.error(error));
+  const connection = await createConnection(ormconfig)
+    .then((connection) => {
+      console.log("Connected to db");
+      return connection;
+    })
+    .catch((error) => {
+      console.error(error);
+      throw error;
+    });
 
-app.use(express.urlencoded({ extended: true }));
-if (process.env.NODE_ENV !== "test") app.use(morgan("tiny"));
-app.use(fileupload({ useTempFiles: true }));
-app.use(xss());
-app.use(helmet());
+  app.use(express.urlencoded({ extended: true }));
+  if (process.env.NODE_ENV !== "test") app.use(morgan("tiny"));
+  app.use(fileupload({ useTempFiles: true }));
+  app.use(xss());
+  app.use(helmet());
 
-app.use("/customers", customerRouter);
-app.use("/users", userRouter);
-app.use("/auth", authRouter);
+  app.use("/customers", customerRouter);
+  app.use("/users", userRouter);
+  app.use("/auth", authRouter);
+
+  return { app, connection };
+}
