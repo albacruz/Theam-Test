@@ -27,7 +27,6 @@ describe("POST /users", () => {
       .field("password", user1.password)
       .field("role", user1.role)
       .auth(adminJWT, { type: "bearer" })
-      .expect("Content-Type", /json/)
       .expect(200);
     newidAdmin = response.body.id;
     console.log("Respuesta", response.body);
@@ -38,16 +37,11 @@ describe("POST /users", () => {
       .post("/users")
       .send(user1)
       .auth(userJWT, { type: "bearer" })
-      .expect("Content-Type", /json/)
       .expect(403);
     done();
   });
   it("respond with json structure containing 401 error because of an unauthorized user triying to create new user", async (done) => {
-    await request(app)
-      .post("/users")
-      .send(user1)
-      .expect("Content-Type", /json/)
-      .expect(401);
+    await request(app).post("/users").send(user1).expect(401);
     done();
   });
 });
@@ -60,7 +54,6 @@ describe("GET /users", () => {
     await request(app)
       .get("/users")
       .auth(adminJWT, { type: "bearer" })
-      .expect("Content-Type", /json/)
       .expect(200);
     done();
   });
@@ -72,7 +65,6 @@ describe("GET /users", () => {
     await request(app)
       .get("/users")
       .auth(userJWT, { type: "bearer" })
-      .expect("Content-Type", /json/)
       .expect(403);
     done();
   });
@@ -80,14 +72,12 @@ describe("GET /users", () => {
     await request(app)
       .get("/users/" + newidAdmin)
       .auth(adminJWT, { type: "bearer" })
-      .expect("Content-Type", /json/)
       .expect(200);
     done();
   });
   it("respond with json structure containing 401 error because of an unauthorized user triying to get one user's information", async (done) => {
     await request(app)
       .get("/users/" + newid)
-      .expect("Content-Type", /json/)
       .expect(401);
     done();
   });
@@ -95,7 +85,6 @@ describe("GET /users", () => {
     await request(app)
       .get("/users/" + newid)
       .auth(userJWT, { type: "bearer" })
-      .expect("Content-Type", /json/)
       .expect(403);
     done();
   });
