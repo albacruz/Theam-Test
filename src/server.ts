@@ -17,7 +17,7 @@ export const app = express();
 
 export const connection = createConnection(ormconfig)
   .then(() => console.log("Connected to db"))
-  .catch((error) => console.log(error));
+  .catch((error) => console.error(error));
 
 app.use(express.urlencoded({ extended: true }));
 app.use(morgan("tiny"));
