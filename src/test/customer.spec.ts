@@ -57,7 +57,7 @@ afterAll(async () => {
 });
 
 describe("POST /customers", () => {
-  it("responds with json structure containing created customer information when an admin creates it", async () => {
+  fit("responds with json structure containing created customer information when an admin creates it", async () => {
     console.log("empece el test");
     const filePath = `${__dirname}/fixtures/testPicture.png`;
     const response = await request(app)
@@ -70,9 +70,9 @@ describe("POST /customers", () => {
     //    .expect(200);
 
     createdIdByAdmin = response.body.id;
-    console.log("status", response.status);
-    console.log("body", response.body);
-    console.log("termine el test");
+    console.log("[depurando] status", response.status);
+    console.log("[depurando] body", response.body);
+    console.log("[depurando] termine el test");
   });
 
   it("responds with json structure containing created customer information when a user creates it", async () => {
