@@ -9,29 +9,13 @@ import * as fileupload from "express-fileupload";
 import * as dotenv from "dotenv";
 import * as xss from "xss-clean";
 import * as helmet from "helmet";
+import { ormconfig } from "../ormconfig";
 
 dotenv.config();
 
 export const app = express();
 
-export const connection = createConnection({
-  type: "postgres",
-  host: "localhost",
-  port: 5432,
-  username: process.env["TYPEORM_USERNAME"],
-  password: process.env["TYPEORM_PASSWORD"],
-  database: process.env["TYPEORM_DATABASE"],
-  synchronize: true,
-  logging: false,
-  entities: ["src/entities/**/*.ts"],
-  migrations: ["src/migration/**/*.ts"],
-  subscribers: ["src/subscriber/**/*.ts"],
-  cli: {
-    entitiesDir: "src/entity",
-    migrationsDir: "src/migration",
-    subscribersDir: "src/subscriber",
-  },
-})
+export const connection = createConnection(ormconfig)
   .then(() => console.log("Connected to db"))
   .catch((error) => console.log(error));
 
