@@ -5,30 +5,29 @@ name: Node.js CI
 
 on:
   push:
-    branches: [ master ]
+    branches: [master]
   pull_request:
-    branches: [ master ]
+    branches: [master]
 
 jobs:
   build:
-
     runs-on: ubuntu-latest
 
     strategy:
       matrix:
-        node-version: [10.x, 12.x, 14.x]
+        node-version: 12.x
 
     steps:
-    - uses: actions/checkout@v2
-    - name: Use Node.js ${{ matrix.node-version }}
-      uses: actions/setup-node@v1
-      with:
-        node-version: ${{ matrix.node-version }}
+      - uses: actions/checkout@v2
+      - name: Use Node.js ${{ matrix.node-version }}
+        uses: actions/setup-node@v1
+        with:
+          node-version: ${{ matrix.node-version }}
 
-    - run: sudo rm /usr/local/bin/docker-compose
-    - run: curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
-    - run: chmod +x docker-compose
-    - run: sudo mv docker-compose /usr/local/bin
-    - run: docker-compose up --build
-    - run: npm install
-    - run: npm test
+      - run: sudo rm /usr/local/bin/docker-compose
+      - run: curl -L https://github.com/docker/compose/releases/download/${DOCKER_COMPOSE_VERSION}/docker-compose-`uname -s`-`uname -m` > docker-compose
+      - run: chmod +x docker-compose
+      - run: sudo mv docker-compose /usr/local/bin
+      - run: docker-compose up --build
+      - run: npm install
+      - run: npm test
