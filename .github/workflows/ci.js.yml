@@ -33,7 +33,7 @@ jobs:
       - name: Tests
         run: npm run test
         env:
-          DATABASE_HOST: postgresql
+          DATABASE_HOST: database
           TYPEORM_DATABASE: theamshop
           TYPEORM_USERNAME: albacruz
           TYPEORM_PASSWORD: pwd0123456789
