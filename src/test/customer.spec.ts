@@ -70,6 +70,7 @@ describe("POST /customers", () => {
     //    .expect(200);
 
     createdIdByAdmin = response.body.id;
+    console.log("adminjwt", adminJWT);
     console.log("[depurando] status", response.status);
     console.log("[depurando] body", response.body);
     console.log("[depurando] termine el test");

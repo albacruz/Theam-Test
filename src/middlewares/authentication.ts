@@ -1,8 +1,7 @@
 import * as jwt from "jsonwebtoken";
 import * as dotenv from "dotenv";
+import { config } from "../config";
 dotenv.config();
-
-const accessTokenSecret = process.env["ACCESS_TOKEN"];
 
 export const authenticateJWT = (req, res, next) => {
   const authHeader = req.headers.authorization;
@@ -16,7 +15,7 @@ export const authenticateJWT = (req, res, next) => {
   } //Unauthorized
   else {
     const token = authHeader.split(" ")[1];
-    jwt.verify(token, accessTokenSecret, (err, user) => {
+    jwt.verify(token, config.jwtSecret, (err, user) => {
       if (err) {
         return res.sendStatus(403); //Forbidden
       }
