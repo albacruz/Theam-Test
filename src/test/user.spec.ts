@@ -5,6 +5,7 @@ import { userUpdated } from "./fixtures/users";
 import { adminJWT } from "./fixtures/users";
 import { userJWT } from "./fixtures/users";
 import { connection } from "../server";
+import { getConnection } from "typeorm";
 
 let newid = 0;
 let newidAdmin = 0;
@@ -13,6 +14,7 @@ beforeAll(async () => {
   await connection;
 });
 
+afterAll(async () => await getConnection().close());
 /**
  * Testing create new user endpoint
  */

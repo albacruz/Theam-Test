@@ -49,6 +49,7 @@ afterAll(async () => {
     TRUNCATE customer RESTART IDENTITY CASCADE;
     TRUNCATE "user" RESTART IDENTITY CASCADE;
   `);
+  await getConnection().close();
 });
 /**
  * Testing create new customer endpoint
