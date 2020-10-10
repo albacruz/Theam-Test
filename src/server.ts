@@ -20,7 +20,7 @@ export const connection = createConnection(ormconfig)
   .catch((error) => console.error(error));
 
 app.use(express.urlencoded({ extended: true }));
-app.use(morgan("tiny"));
+if (process.env.NODE_ENV !== "test") app.use(morgan("tiny"));
 app.use(fileupload({ useTempFiles: true }));
 app.use(xss());
 app.use(helmet());
