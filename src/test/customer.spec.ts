@@ -58,7 +58,6 @@ afterAll(async () => {
 
 describe("POST /customers", () => {
   it("responds with json structure containing created customer information when an admin creates it", async () => {
-    console.log("empece el test");
     const filePath = `${__dirname}/fixtures/testPicture.png`;
     const { body, status } = await request(app)
       .post("/customers")
@@ -66,9 +65,6 @@ describe("POST /customers", () => {
       .field("name", customer1.name)
       .field("surname", customer1.surname)
       .auth(adminJWT, { type: "bearer" });
-    // .expect("Content-Type", /json/);
-    //    .expect(200);
-
     createdIdByAdmin = body.id;
     expect(body.surname).toEqual("Alba");
     expect(body.name).toEqual("Cruz");

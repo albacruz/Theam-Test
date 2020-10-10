@@ -1,9 +1,9 @@
 export const customer1 = {
-  name: "Cruz",
-  surname: "Alba",
+  name: "Alba",
+  surname: "Cruz",
 };
 
 export const customerUpdated = {
-  name: "Cruz Torres",
-  surname: "Alba María",
+  name: "Alba Maria",
+  surname: "Cruz Torres",
 };
