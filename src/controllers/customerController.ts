@@ -2,6 +2,7 @@ import { Customer } from "../entities/Customer";
 import { getConnection } from "typeorm";
 import * as cloudinary from "cloudinary";
 import * as dotenv from "dotenv";
+import { config } from "../config";
 dotenv.config();
 
 function filterCustomersData(customer) {
@@ -29,11 +30,7 @@ function filterCustomerData(customer) {
   return filteredCustomer;
 }
 
-cloudinary.v2.config({
-  cloud_name: process.env["CLOUDINARY_NAME"],
-  api_key: process.env["CLOUDINARY_KEY"],
-  api_secret: process.env["CLOUDINARY_API_SECRET"],
-});
+cloudinary.v2.config(config.cloudinaryConfig);
 
 export async function createCustomer(req, res) {
   console.log("Empezamos el controlador de createCustomer");
