@@ -57,10 +57,10 @@ afterAll(async () => {
 });
 
 describe("POST /customers", () => {
-  fit("responds with json structure containing created customer information when an admin creates it", async () => {
+  it("responds with json structure containing created customer information when an admin creates it", async () => {
     console.log("empece el test");
     const filePath = `${__dirname}/fixtures/testPicture.png`;
-    const response = await request(app)
+    const { body, status } = await request(app)
       .post("/customers")
       .attach("photo", filePath)
       .field("name", customer1.name)
@@ -69,11 +69,11 @@ describe("POST /customers", () => {
     // .expect("Content-Type", /json/);
     //    .expect(200);
 
-    createdIdByAdmin = response.body.id;
-    console.log("adminjwt", adminJWT);
-    console.log("[depurando] status", response.status);
-    console.log("[depurando] body", response.body);
-    console.log("[depurando] termine el test");
+    createdIdByAdmin = body.id;
+    expect(body.surname).toEqual("Alba");
+    expect(body.name).toEqual("Cruz");
+    expect(body.photo).toMatch("cloudinary.com");
+    expect(status).toBe(200);
   });
 
   it("responds with json structure containing created customer information when a user creates it", async () => {
