@@ -65,6 +65,8 @@ describe("POST /customers", () => {
       .field("name", customer1.name)
       .field("surname", customer1.surname)
       .auth(adminJWT, { type: "bearer" });
+    console.log("name", body.name);
+    console.log("surname", body.surname);
     createdIdByAdmin = body.id;
     expect(body.surname).toEqual("Cruz");
     expect(body.name).toEqual("Alba");
@@ -81,8 +83,8 @@ describe("POST /customers", () => {
       .field("surname", customer1.surname)
       .auth(userJWT, { type: "bearer" });
     createdIdByUser = body.id;
-    expect(body.surname).toEqual("Alba");
-    expect(body.name).toEqual("Cruz");
+    expect(body.name).toEqual("Alba");
+    expect(body.surname).toEqual("Cruz");
     expect(body.photo).toMatch("cloudinary.com");
     expect(status).toBe(200);
   });
