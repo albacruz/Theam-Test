@@ -74,16 +74,17 @@ describe("POST /customers", () => {
 
   it("responds with json structure containing created customer information when a user creates it", async () => {
     const filePath = `${__dirname}/fixtures/testPicture.png`;
-    const response = await request(app)
+    const { body, status } = await request(app)
       .post("/customers")
       .attach("photo", filePath)
       .field("name", customer1.name)
       .field("surname", customer1.surname)
-      .auth(userJWT, { type: "bearer" })
-      .expect("Content-Type", /json/)
-      .expect(200);
-    createdIdByUser = response.body.id;
-    console.log(response.body);
+      .auth(userJWT, { type: "bearer" });
+    createdIdByUser = body.id;
+    expect(body.surname).toEqual("Alba");
+    expect(body.name).toEqual("Cruz");
+    expect(body.photo).toMatch("cloudinary.com");
+    expect(status).toBe(200);
   });
 
   it("responds with json structure containing 401 error because of an unauthorized user triying to create a customer", async () => {

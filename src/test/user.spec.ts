@@ -5,7 +5,6 @@ import { userUpdated } from "./fixtures/users";
 import { adminJWT } from "./fixtures/users";
 import { userJWT } from "./fixtures/users";
 import { Connection } from "typeorm";
-import { getConnection } from "typeorm";
 
 let newid = 0;
 let newidAdmin = 0;
