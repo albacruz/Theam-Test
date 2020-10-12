@@ -37,10 +37,6 @@ jobs:
           TYPEORM_DATABASE: theamshop
           TYPEORM_USERNAME: albacruz
           TYPEORM_PASSWORD: pwd0123456789
-  deploy:
-    name: deploy
-    runs-on: ubuntu-latest
-    steps:
       - name: executing remote ssh commands
         uses: appleboy/ssh-action@master
         with:
@@ -48,4 +44,4 @@ jobs:
           username: ${{ secrets.USERNAME }}
           port: ${{ secrets.PORT }}
           key: ${{ secrets.KEY }}
-          script: whoami
+          script: ls -la
