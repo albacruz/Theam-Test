@@ -44,4 +44,4 @@ jobs:
           username: ${{ secrets.USERNAME }}
           port: ${{ secrets.PORT }}
           key: ${{ secrets.KEY }}
-          script: cd Theam-Test/ && docker-compose down && git pull && docker-compose up --build api-core
+          script: cd Theam-Test/ && docker-compose down && git pull && docker-compose up -d --build api-core
