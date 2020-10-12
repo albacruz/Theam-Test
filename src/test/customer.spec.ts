@@ -38,8 +38,6 @@ let app;
 let connection: Connection;
 
 beforeAll(async () => {
-  console.log("esperando la conexion");
-
   const { app: localApp, connection: localConnection } = await createApp();
   app = localApp;
   connection = localConnection;
