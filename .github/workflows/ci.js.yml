@@ -35,7 +35,7 @@ jobs:
         env:
           DATABASE_HOST: database
           TYPEORM_DATABASE: theamshop
-          TYPEORM_USERNAME: albacruztorres
+          TYPEORM_USERNAME: albacruz
           TYPEORM_PASSWORD: pwd0123456789
       - name: executing remote ssh commands
         uses: appleboy/ssh-action@master
