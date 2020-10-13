@@ -107,7 +107,6 @@ export async function deleteUser(req, res) {
     await getConnection()
       .manager.update(User, req.params.id, { isDeleted: true })
       .then((response) => {
-        console.log(response);
         res.send(response);
       })
       .catch((error) => console.log(error));
@@ -125,7 +124,6 @@ export async function updateUser(req, res) {
     await getConnection()
       .manager.update(User, req.params.id, req.body)
       .then((response) => {
-        console.log(response);
         res.send(response);
       })
       .catch((error) => console.log(error));

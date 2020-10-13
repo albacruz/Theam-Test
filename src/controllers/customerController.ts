@@ -77,7 +77,6 @@ export async function deleteCustomer(req, res) {
   await getConnection()
     .manager.update(Customer, req.params.id, { isDeleted: true })
     .then((response) => {
-      console.log(response);
       res.send(response);
     })
     .catch((error) => console.log(error));
@@ -88,7 +87,6 @@ export async function updateCustomer(req, res) {
   await getConnection()
     .manager.update(Customer, req.params.id, req.body)
     .then((response) => {
-      console.log(response);
       res.send(response);
     })
     .catch((error) => console.log(error));
