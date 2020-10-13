@@ -34,5 +34,5 @@
 ### Infrastructure
 
 - CI: GitHub Actions
-- CD: CodeDeploy service AWS
+- CD: GitHub Actions to EC2
 - DB: RDS in AWS with PostgreSQL

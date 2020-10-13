@@ -18,7 +18,7 @@ async function createAdmin(connection: Connection) {
   newUserAdmin.password = "1234";
   newUserAdmin.role = "admin" as Role;
 
-  const responseAdmin = await connection.manager.save(newUserAdmin);
+  await connection.manager.save(newUserAdmin);
 }
 
 async function createUser(connection: Connection) {
@@ -27,12 +27,8 @@ async function createUser(connection: Connection) {
   newUser.password = "1234";
   newUser.role = "user" as Role;
 
-  const responseUser = await connection.manager.save(newUser);
+  await connection.manager.save(newUser);
 }
-
-/**
- * Testing create new customer endpoint
- */
 
 let app;
 let connection: Connection;
@@ -41,7 +37,6 @@ beforeAll(async () => {
   const { app: localApp, connection: localConnection } = await createApp();
   app = localApp;
   connection = localConnection;
-  console.log("ya la tnego");
   await createAdmin(localConnection);
   await createUser(localConnection);
 });
@@ -54,6 +49,10 @@ afterAll(async () => {
   await connection.close();
 });
 
+/**
+ * Testing create new customer endpoint
+ */
+
 describe("POST /customers", () => {
   it("responds with json structure containing created customer information when an admin creates it", async () => {
     const filePath = `${__dirname}/fixtures/testPicture.png`;
@@ -63,8 +62,6 @@ describe("POST /customers", () => {
       .field("name", customer1.name)
       .field("surname", customer1.surname)
       .auth(adminJWT, { type: "bearer" });
-    console.log("name", body.name);
-    console.log("surname", body.surname);
     createdIdByAdmin = body.id;
     expect(body.surname).toEqual("Cruz");
     expect(body.name).toEqual("Alba");
@@ -99,7 +96,7 @@ describe("POST /customers", () => {
 });
 
 /**
- * Testing get all customers or just one endpoint
+ * Testing get all customers or just one customer endpoint
  */
 
 describe("GET /customers", () => {

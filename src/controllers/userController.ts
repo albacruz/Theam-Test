@@ -8,11 +8,11 @@ function generateSalt() {
 }
 
 export function hashPassword(password, salt) {
-  console.log("password", password);
   let hash = crypto.createHmac("sha512", salt);
   hash.update(password);
   return hash.digest("hex");
 }
+
 function filterUsersData(user) {
   const filteredUser = {
     id: user.id,
@@ -41,7 +41,6 @@ export async function createUser(req, res) {
     if (typeof alreadyExists !== "undefined" && alreadyExists.length > 0) {
       res.send("Username already exists");
     } else {
-      console.log("req.body", req.body);
       const newUser = new User();
       newUser.username = req.body.username;
       const userSalt = generateSalt();

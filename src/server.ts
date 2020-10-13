@@ -18,7 +18,6 @@ export async function createApp() {
 
   const connection = await createConnection(ormconfig)
     .then((connection) => {
-      console.log("Connected to db");
       return connection;
     })
     .catch((error) => {

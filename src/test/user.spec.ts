@@ -18,21 +18,23 @@ beforeAll(async () => {
 });
 
 afterAll(async () => await connection.close());
+
 /**
  * Testing create new user endpoint
  */
 
 describe("POST /users", () => {
   it("respond with json structure containing created user information", async () => {
-    const response = await request(app)
+    const { body, status } = await request(app)
       .post("/users")
       .field("username", user1.username)
       .field("password", user1.password)
       .field("role", user1.role)
-      .auth(adminJWT, { type: "bearer" })
-      .expect(200);
-    newidAdmin = response.body.id;
-    console.log("Respuesta", response.body);
+      .auth(adminJWT, { type: "bearer" });
+    expect(body.username).toEqual("user1");
+    expect(body.role).toEqual("user");
+    expect(status).toBe(200);
+    newidAdmin = body.id;
   });
   it("respond with json structure containing 403 error because of a non admin privilege user trying to create new user", async () => {
     await request(app)
@@ -47,7 +49,7 @@ describe("POST /users", () => {
 });
 
 /**
- * Testing get all users or just one endpoint
+ * Testing get all users or just one user endpoint
  */
 describe("GET /users", () => {
   it("respond with json structure containing all shop users", async () => {

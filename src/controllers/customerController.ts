@@ -33,8 +33,6 @@ function filterCustomerData(customer) {
 cloudinary.v2.config(config.cloudinaryConfig);
 
 export async function createCustomer(req, res) {
-  console.log("Empezamos el controlador de createCustomer");
-  console.log(req.user);
   const newCustomer = new Customer();
   newCustomer.name = req.body.name;
   newCustomer.surname = req.body.surname;
@@ -51,8 +49,6 @@ export async function createCustomer(req, res) {
       res.send(filterCustomersData(newCustomer));
     })
     .catch((error) => console.log(error));
-
-  console.log("terminamos");
 }
 
 export async function getAllCustomers(req, res) {
@@ -89,7 +85,6 @@ export async function deleteCustomer(req, res) {
 
 export async function updateCustomer(req, res) {
   req.body.lastUpdatedBy = req.user.id;
-  console.log("To update", req.body);
   await getConnection()
     .manager.update(Customer, req.params.id, req.body)
     .then((response) => {
