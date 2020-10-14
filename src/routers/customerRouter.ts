@@ -7,7 +7,7 @@ export const customerRouter = express.Router();
 customerRouter.post("/", authenticateJWT, customerController.createCustomer);
 customerRouter.get("/", authenticateJWT, customerController.getAllCustomers);
 customerRouter.get("/:id", authenticateJWT, customerController.getCustomer);
-customerRouter.put("/:id", authenticateJWT, customerController.updateCustomer);
+customerRouter.patch("/:id", authenticateJWT, customerController.updateCustomer);
 customerRouter.delete(
   "/:id",
   authenticateJWT,

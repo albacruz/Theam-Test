@@ -90,23 +90,23 @@ describe("GET /users", () => {
  * Testing update one user endpoint
  */
 
-describe("PUT /users", () => {
+describe("PATCH /users", () => {
   it("respond 200 status code if it updates correctly indicated user", async () => {
     await request(app)
-      .put("/users/" + newidAdmin)
+      .patch("/users/" + newidAdmin)
       .field("username", userUpdated.username)
       .auth(adminJWT, { type: "bearer" })
       .expect(200);
   });
   it("respond with json structure containing 401 error because of an unauthorized user triying to update one user's information", async () => {
     await request(app)
-      .put("/users/" + newid)
+      .patch("/users/" + newid)
       .send(userUpdated)
       .expect(401);
   });
   it("respond with json structure containing 403 error because of a non admin privilege user triying to update one user's information", async () => {
     await request(app)
-      .put("/users/" + newid)
+      .patch("/users/" + newid)
       .send(userUpdated)
       .auth(userJWT, { type: "bearer" })
       .expect(403);

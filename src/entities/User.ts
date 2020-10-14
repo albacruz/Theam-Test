@@ -20,7 +20,7 @@ export class User {
   @Column({ nullable: true })
   salt: string;
 
-  @Column({ type: "enum", enum: Role })
+  @Column({ type: "enum", enum: Role, default: "user" })
   role: Role;
 
   @Column({ default: false })

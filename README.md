@@ -3,10 +3,9 @@
 ## Steps to run this project:
 
 1. Run `npm i` command
-2. Create your own cloudinary account
-3. Setup environment variables inside `.env` file
-4. Run project with `docker-compose up` command
-5. Run tests with `npm run test` command (make sure that at least database is up with `docker-compose up postgresql` command)
+2. Setup environment variables inside `.env` file
+3. Run project with `docker-compose up` command
+4. Run tests with `npm run test` command (make sure that at least Bodybase is up with `docker-compose up postgresql` command)
 
 ### .env
 
@@ -17,9 +16,10 @@
 | CLOUDINARY_API_SECRET |
 | TYPEORM_DATABASE      |
 | TYPEORM_USERNAME      |
-| TYPEORM_PASSWORD      |
-| DATABASE_HOST         |
-| ACCESS_TOKEN          |
+
+|TYPEORM_PASSWORD
+|DATABASE_HOST|
+|ACCESS_TOKEN|
 
 ## Tech Stack
 
@@ -34,5 +34,140 @@
 ### Infrastructure
 
 - CI: GitHub Actions
-- CD: GitHub Actions to EC2
+- CD: CodeDeploy service AWS
 - DB: RDS in AWS with PostgreSQL
+
+## Endpoints Usage
+
+### Create New Customer
+
+- **URL**
+  - /customers
+- **Method**
+  - `POST`
+- **URL Params**
+  - None
+- **Body Params**
+  - **Required**
+    - `name=[string]`
+    - `surname=[string]`
+  - **Optional**
+    - `photo=[file]`
+
+### Get All Customers
+
+- **URL**
+  - /customers
+- **Method**
+  - `GET`
+- **URL Params**
+  - None
+- **Body Params**
+  - None
+
+### Get Customer
+
+- **URL**
+  - /customers/:id
+- **Method**
+  - `GET`
+- **URL Params**
+  - `id=[integer]`
+- **Body Params**
+  - None
+
+### Update Customer
+
+- **URL**
+  - /customers/:id
+- **Method**
+  - `PATCH`
+- **URL Params**
+  - `id=[integer]`
+- **Body Params**
+  - `name=[string]`
+  - `surname=[string]`
+  - `photo=[file]`
+
+### Delete Customer
+
+- **URL**
+  - /customers/:id
+- **Method**
+  - `DELETE`
+- **URL Params**
+  - `id=[integer]`
+- **Body Params**
+  - None
+
+### Create New User
+
+- **URL**
+  - /users
+- **Method**
+  - `POST`
+- **URL Params**
+  - None
+- **Body Params**
+  - **Required**
+    - `username=[string]`
+    - `password=[string]`
+    - `role=[Role]`
+
+### Get all users
+
+- **URL**
+  - /users
+- **Method**
+  - `GET`
+- **URL Params**
+  - None
+- **Body Params**
+  - None
+
+### Get User
+
+- **URL**
+  - /users/:id
+- **Method**
+  - `GET`
+- **URL Params**
+  - `id=[integer]`
+- **Body Params**
+  - None
+
+### Update User
+
+- **URL**
+  - /users/:id
+- **Method**
+  - `PATCH`
+- **URL Params**
+  - `id=[integer]`
+- **Body Params**
+  - `username=[string]`
+  - `role=[Role]`
+
+### Delete User
+
+- **URL**
+  - /users/:id
+- **Method**
+  - `DELETE`
+- **URL Params**
+  - `id=[integer]`
+- **Body Params**
+  - None
+
+### Login
+
+- **URL**
+  - /auth/login
+- **Method**
+  - `POST`
+- **URL Params**
+  - None
+- **Body Params**
+  - **Required**
+    - `username=[string]`
+    - `password=[string]`

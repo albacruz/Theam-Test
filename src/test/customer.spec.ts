@@ -148,24 +148,24 @@ describe("GET /customers", () => {
  * Testing update one customer endpoint
  */
 
-describe("PUT /customers", () => {
+describe("PATCH /customers", () => {
   it("responds 200 status code if it updates correctly indicated customer when admin calls endpoint", async () => {
     await request(app)
-      .put("/customers/" + createdIdByAdmin)
+      .patch("/customers/" + createdIdByAdmin)
       .auth(adminJWT, { type: "bearer" })
       .send(customerUpdated)
       .expect(200);
   });
   it("responds 200 status code if it updates correctly indicated customer when user calls endpoint", async () => {
     await request(app)
-      .put("/customers/" + createdIdByUser)
+      .patch("/customers/" + createdIdByUser)
       .auth(userJWT, { type: "bearer" })
       .send(customerUpdated)
       .expect(200);
   });
   it("responds with json structure containign 401 error when an unauthorized user tries to update a customer", async () => {
     await request(app)
-      .put("/customers/" + newid)
+      .patch("/customers/" + newid)
       .send(customerUpdated)
       .expect(401);
   });
