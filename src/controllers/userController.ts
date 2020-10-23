@@ -109,7 +109,7 @@ export async function deleteUser(req, res) {
       .then((response) => {
         res.send(response);
       })
-      .catch((err) => console.log(err));
+      .catch((error) => console.log(error));
   } else {
     res.status(403);
     res.json({
