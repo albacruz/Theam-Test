@@ -22,7 +22,7 @@ function filterUsersData(user) {
   return filteredUser;
 }
 
-function filterUserData(user) {
+function filterDeletedUserData(user) {
   const filteredUser = {
     id: user.id,
     username: user.username,
@@ -87,7 +87,7 @@ export async function getUser(req, res) {
       .manager.findOne(User, req.params.id)
       .then((user) => {
         if (user.isDeleted) {
-          res.send(filterUserData(user));
+          res.send(filterDeletedUserData(user));
         } else {
           res.send(filterUsersData(user));
         }

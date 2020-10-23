@@ -17,7 +17,7 @@ function filterCustomersData(customer) {
   return filteredCustomer;
 }
 
-function filterCustomerData(customer) {
+function filterDeletedCustomerData(customer) {
   const filteredCustomer = {
     id: customer.id,
     name: customer.name,
@@ -65,7 +65,7 @@ export async function getCustomer(req, res) {
     .manager.findOne(Customer, req.params.id)
     .then((customer) => {
       if (customer.isDeleted) {
-        res.send(filterCustomerData(customer));
+        res.send(filterDeletedCustomerData(customer));
       } else {
         res.send(filterCustomersData(customer));
       }
